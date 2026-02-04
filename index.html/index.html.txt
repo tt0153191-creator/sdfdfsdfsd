@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Биржа Труда</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f1012;
+            --card-bg: #1c1d21;
+            --text-color: #ffffff;
+            --accent-green: #4caf50;
+            --accent-yellow: #fbc02d;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 15px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .balance {
+            background: #1a2a2d;
+            color: #4db6ac;
+            padding: 5px 15px;
+            border-radius: 12px;
+            font-weight: bold;
+            border: 1px solid #26a69a;
+        }
+
+        .task-list-title {
+            font-size: 1.1rem;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .task-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            justify-content: space-between;
+        }
+
+        .task-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .task-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: #333;
+        }
+
+        .task-text h4 { margin: 0; font-size: 0.95rem; }
+        .task-text p { margin: 4px 0 0; font-size: 0.8rem; color: #888; }
+
+        .task-reward {
+            text-align: right;
+        }
+
+        .price { color: var(--accent-green); font-weight: bold; margin-bottom: 8px; }
+
+        .btn {
+            background: var(--accent-yellow);
+            color: black;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* VIP стиль */
+        .vip-card {
+            border: 1px solid var(--accent-yellow);
+            position: relative;
+        }
+
+        /* Modal / Alert */
+        #custom-alert {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2a2a2e;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            z-index: 1000;
+            width: 80%;
+            border: 1px solid #444;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div style="font-weight: bold;">Привет, 👋</div>
+        <div class="balance">💳 350 ₽</div>
+    </div>
+
+    <div class="task-list-title">📋 Доступные задания</div>
+
+    <div class="task-card">
+        <div class="task-info">
+            <div class="task-icon" style="background: #90caf9;"></div>
+            <div class="task-text">
+                <h4>Подписаться</h4>
+                <p>Выполнено: 1 из 2</p>
+            </div>
+        </div>
+        <div class="task-reward">
+            <div class="price">350 ₽</div>
+            <button class="btn" onclick="showAlert()">Выполнить</button>
+        </div>
+    </div>
+
+    <div class="task-card vip-card">
+        <div class="task-info">
+            <div class="task-icon" style="background: #ffd54f;"></div>
+            <div class="task-text">
+                <h4>Пригласить друзей</h4>
+                <p>Выполнено: 13 из 50</p>
+            </div>
+        </div>
+        <div class="task-reward">
+            <div class="price" style="color: #81c784;">12 300 ₽</div>
+            <button class="btn" style="background: orange;" onclick="showAlert()">Выполнить</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeAlert()"></div>
+    <div id="custom-alert">
+        <p>Задание не доступно</p>
+        <button class="btn" onclick="closeAlert()">Ок</button>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Расширяет приложение на весь экран
+
+        function showAlert() {
+            // Можно использовать стандартный Telegram Popup
+            tg.showPopup({
+                title: 'Уведомление',
+                message: 'Задание не доступно',
+                buttons: [{type: 'ok'}]
+            });
+            
+            // Или наш кастомный HTML вариант:
+            // document.getElementById('overlay').style.display = 'block';
+            // document.getElementById('custom-alert').style.display = 'block';
+        }
+
+        function closeAlert() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('custom-alert').style.display = 'none';
+        }
+    </script>
+</body>
+const tg = window.Telegram.WebApp;
+tg.expand();
+
+function showAlert() {
+    tg.showPopup({
+        title: 'Ошибка',
+        message: 'Задание не доступно',
+        buttons: [{type: 'close'}]
+    });
+}
+</html>
